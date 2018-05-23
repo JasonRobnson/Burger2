@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/assets/css/burger_style.css/">
+    <link href="https://fonts.googleapis.com/css?family=Courgette|Permanent+Marker" rel="stylesheet">
+    <title>We got the Burgers!</title>
+
+    <style>
+        body {
+            background-image: url("../assets/assets/food.png");
+        }
+
+        h2 {
+            font-family: 'Courgette', cursive;
+        }
+
+        h1,
+        h6 {
+            font-family: 'Permanent Marker', cursive;
+            color: #f06292;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>What Time is it? BurgerTime! Yeah Boyeee!!</h1>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <h2>Burgers on Deck</h2>
+
+                {{#each burgers}} {{#unless this.devoured}}
+                <h6> {{burger_name}} </h6>
+                <div class="col-xs-3 text-center">
+                    <form action="/devour" method="post">
+                        {{!--
+                        <pre>{{this.id}}. {{this.burger_name}}</pre> --}}
+                        <input type="hidden" name="burgerType" type="text" value={{this.id}}>
+                        <button type="submit" class="btn-sm btn-default">SMASH IT!</button>
+                    </form>
+                </div>
+                {{/unless}} {{/each}}
+
+
+            </div>
+
+            <div class="col-md-4">
+                <img src="../assets/assets/burgerface.png" alt="It's a Burger!">
+            </div>
+            <div class="col-md-4 text-center">
+                {{!-- This div will hold the burgers devoured query --}}
+                <h2>Burgers Ate</h2>
+                {{#each burgers}} {{#if this.devoured}}
+                <h6>{{burger_name}}
+                    <h6>
+                        {{/if}} {{/each}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal">
+                    <div class="form-group form-group-lg text-center">
+                        <label class="col-md-6 control-label" for="formGroupInputLarge">
+                            <h2>Make your creation</h2>
+                        </label>
+                        <div class="col-md-12 text-center">
+                            <input class="form-control" type="text" id="userBurgerInput" placeholder="Create your favorite burger here....">
+                            <button type="submit" id="userOrderButton" class=" btn-default btn-sm btn-danger">Order</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(() => {
+            orderButtonEvent();
+
+        });
+
+        let orderButtonEvent = () => {
+            $("#userOrderButton").on("click", (e) => {
+                let newBurger = {
+                    burger_name: $("#userBurgerInput").val().trim()
+                }
+                let url = window.location.origin;
+                $.post(url + "/api/burgers", newBurger, (data) => {
+                    location.reload();
+                })
+
+            })
+        }
+    </script>
+
+
+
+</body>
+
+<!-- Jquery links Java Script links -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+</html>
