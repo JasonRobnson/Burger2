@@ -12,7 +12,7 @@ const routes = require("./controllers/burgers__controller.js")
 app.use(express.static("public"));
 
 // parses the application with form URL encoder
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true }));
 
 app.use(bodyParser.json());
 
@@ -23,7 +23,7 @@ app.use(routes);
 
 
 app.listen(PORT, () => {
-  console.log(`Server listening on: http://localhost ${PORT});
+  console.log(`Server listening on: http://localhost ${PORT}`);
 });
 
 
